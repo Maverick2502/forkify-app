@@ -33,6 +33,15 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   };
 
+  addHandlerRender(handler) {
+      ['hashchange', 'load'].forEach(e => 
+        window.addEventListener(e, handler)
+        );
+        // the same as doing the above one
+        // window.addEventListener('hashchange', controlRecipes);
+        // window.addEventListener('load', controlRecipes);
+  }
+  
   #generateMarkup() {
     return `
         <figure class="recipe__fig">
@@ -123,10 +132,10 @@ class RecipeView {
                 <use href="${icons}#icon-check"></use>
         </svg>
         <div class="recipe__quantity">${
-            ing.quantity ? new Fraction(ing.quantity).toString() : ''
+          ing.quantity ? new Fraction(ing.quantity).toString() : ''
         }</div>
         <div class="recipe__description">
-            <span class="recipe__unit">${ing.quantity}</span>
+            <span class="recipe__unit">${ing.unit}</span>
             ${ing.description}
             </div>
         </li>
