@@ -6,16 +6,6 @@ import 'regenerator-runtime/runtime' //for polyfilling async/await
 
 const recipeContainer = document.querySelector('.recipe');
 
-// svgSprite.config.js
-
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
-};
-
 console.log('TEST');
 
 const controlRecipes = async function () {
@@ -39,5 +29,5 @@ const controlRecipes = async function () {
 
 ['hashchange', 'load'].forEach(e => window.addEventListener(e, controlRecipes))
 // the same as doing the above one
-// window.addEventListener('hashchange', showRecipe);
-// window.addEventListener('load', showRecipe);
+// window.addEventListener('hashchange', controlRecipes);
+// window.addEventListener('load', controlRecipes);
