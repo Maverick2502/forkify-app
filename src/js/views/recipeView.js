@@ -5,6 +5,8 @@ console.log({Fraction});
 class RecipeView {
   #parentElement = document.querySelector('.recipe');
   #data;
+  #errorMessage = 'We couldn\'t find that recipe. Please try another one!';
+  #successMessage = '';
 
   render(data) {
     this.#data = data;
@@ -13,7 +15,6 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
     // recipeContainer.insertAdjacentHTML('afterbegin', markup);
     // const recipeContainer = document.querySelector('.recipe');
-
   }
 
   #clear() {
@@ -29,19 +30,49 @@ class RecipeView {
           </div>
         `;
 
-    this.#parentElement.innerHTML = '';
+    this.#clear();
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   };
 
-  addHandlerRender(handler) {
-      ['hashchange', 'load'].forEach(e => 
-        window.addEventListener(e, handler)
-        );
-        // the same as doing the above one
-        // window.addEventListener('hashchange', controlRecipes);
-        // window.addEventListener('load', controlRecipes);
+  renderError(message = this.#errorMessage) {
+    const markup = `
+         <div class="error">
+            <div>
+              <svg>
+                <use href="${icons}#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>
+      `;
+
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   }
-  
+
+  renderMessage(message = this.#successMessage) {
+    const markup = `
+         <div class="message">
+            <div>
+              <svg>
+                <use href="${icons}#icon-smile"></use>
+              </svg>
+            </div>
+            <p>${message}</p>
+          </div>
+      `;
+
+    this.#clear();
+    this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  addHandlerRender(handler) {
+    ['hashchange', 'load'].forEach(e => window.addEventListener(e, handler));
+    // the same as doing the above one
+    // window.addEventListener('hashchange', controlRecipes);
+    // window.addEventListener('load', controlRecipes);
+  }
+
   #generateMarkup() {
     return `
         <figure class="recipe__fig">
@@ -126,7 +157,7 @@ class RecipeView {
         `;
   }
   #generateMarkupIngredient(ing) {
-      return `
+    return `
         <li class="recipe__ingredient">
             <svg class="recipe__icon">
                 <use href="${icons}#icon-check"></use>
@@ -140,7 +171,7 @@ class RecipeView {
             </div>
         </li>
         `;
-      };
+  }
 }
 
 export default new RecipeView();
