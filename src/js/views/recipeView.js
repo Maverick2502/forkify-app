@@ -49,7 +49,7 @@ class RecipeView {
               <use href="${icons}#icon-clock"></use>
             </svg>
             <span class="recipe__info-data recipe__info-data--minutes">
-            ${this.#data.cooking_time}
+            ${this.#data.cookingTime}
             </span>
             <span class="recipe__info-text">minutes</span>
           </div>
@@ -91,9 +91,7 @@ class RecipeView {
         <div class="recipe__ingredients">
           <h2 class="heading--2">Recipe ingredients</h2>
           <ul class="recipe__ingredient-list">
-          ${this.#data.ingredients
-            .map(this.#generateMarkupIngredient)
-            .join('')}
+          ${this.#data.ingredients.map(this.#generateMarkupIngredient).join('')}
         </div>
 
         <div class="recipe__directions">
@@ -107,7 +105,7 @@ class RecipeView {
           </p>
           <a
             class="btn--small recipe__btn"
-            href="${this.#data.source_url}"
+            href="${this.#data.sourceURL}"
             target="_blank"
           >
             <span>Directions</span>
