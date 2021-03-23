@@ -16,7 +16,6 @@ class SearchView {
             e.preventDefault();
             handler();
         });
-        console.log(this);
     }
 }
 
