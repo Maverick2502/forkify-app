@@ -8,7 +8,7 @@ import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
 
 import 'core-js/stable'; ////for polyfilling the rest
-import 'regenerator-runtime/runtime'; //for polyfilling async/await
+// import 'regenerator-runtime/runtime'; //for polyfilling async/await
 import { async } from 'regenerator-runtime';
 
 console.log('TEST');
@@ -93,6 +93,9 @@ const controlBookmarks = function () {
 
 const controlAddRecipe = async function (newRecipe) {
   try {
+    // Show loading spinner
+    addRecipeView.renderSpinner();
+
     await model.uploadRecipe(newRecipe);
     console.log(model.state.recipe);
 
@@ -100,6 +103,13 @@ const controlAddRecipe = async function (newRecipe) {
     recipeView.render(model.state.recipe);
     // Success message
     addRecipeView.renderMessage();
+
+    //Render bookmark view
+    bookmarksView.render(model.state.bookmarks);
+
+    //Change ID in Url
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+
     //Close form window
     setTimeout(function () {
       addRecipeView.toggleWindow();
@@ -108,6 +118,7 @@ const controlAddRecipe = async function (newRecipe) {
     console.error('🌋', err);
     addRecipeView.renderError(err.message);
   }
+  location.reload(); // auto reloads the page after adding a recipe
 };
 
 const init = function () {
